@@ -52,9 +52,11 @@ export default {
       }.bind(this));
     },
     deletePerson: function(person) {
-      // find the index of this person in the people array
-      var index = this.people.indexOf(person);
-      this.people.splice(index, 1);
+      axios.delete("http://localhost:3000/api/people/" + person.id).then(function(response){
+        // find the index of this person in the people array
+        var index = this.people.indexOf(person);
+        this.people.splice(index, 1);
+      }.bind(this));
     },
     toggleBioVisible: function(person) {
       // sets bioVisible equal to the opposite of what it was
