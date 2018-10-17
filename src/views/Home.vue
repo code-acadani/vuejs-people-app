@@ -41,8 +41,15 @@ export default {
   },
   methods: {
     addPerson: function() {
-      // push the newPerson object into the people array
-      this.people.push(this.newPerson);
+      var params = {
+        name: this.newPerson.name, 
+        bio: this.newPerson.bio
+      }
+      axios.post("http://localhost:3000/api/people", params).then(function(response){
+        this.people.push(response.data);
+        this.newPerson.name = "";
+        this.newPerson.bio = "";
+      }.bind(this));
     },
     deletePerson: function(person) {
       // find the index of this person in the people array
