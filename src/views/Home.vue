@@ -1,22 +1,24 @@
 <template>
   <div class="home">
 
-    <h4>Total number of people: {{ people.length }}</h4>
+    <div class="container">
+      <h4>Total number of people: {{ people.length }}</h4>
 
-    <div>
-      Name: <input v-model="newPerson.name">
-      Bio: <input v-model="newPerson.bio">
-      <button v-on:click="addPerson()">Add Person</button>
-    </div>
+      <div>
+        Name: <input v-model="newPerson.name">
+        Bio: <input v-model="newPerson.bio">
+        <button class="btn btn-info" v-on:click="addPerson()">Add Person</button>
+      </div>
 
-    <div>
-      <li v-for="error in errors">{{ error }}</li>
-    </div>
+      <div>
+        <li v-for="error in errors">{{ error }}</li>
+      </div>
 
-    <div v-for="person in people">
-      <h2 v-on:click="toggleBioVisible(person)">{{ person.name }}</h2> 
-      <h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
-      <button v-on:click="deletePerson(person)">Delete</button>
+      <div v-for="person in people">
+        <h2 v-on:click="toggleBioVisible(person)">{{ person.name }}</h2> 
+        <h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
+        <button class="btn btn-primary" v-on:click="deletePerson(person)">Delete</button>
+      </div>
     </div>
 
   </div>
