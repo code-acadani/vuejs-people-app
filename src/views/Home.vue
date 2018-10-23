@@ -4,21 +4,41 @@
     <div class="container">
       <h4>Total number of people: {{ people.length }}</h4>
 
-      <div>
-        Name: <input v-model="newPerson.name">
-        Bio: <input v-model="newPerson.bio">
-        <button class="btn btn-info" v-on:click="addPerson()">Add Person</button>
+      <div class="col-md-8 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <input v-model="newPerson.name" class="form-control" placeholder="Name" type="text">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <textarea v-model="newPerson.bio" name="" class="form-control" id="" cols="30" rows="7" placeholder="Bio"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <input v-on:click="addPerson()" value="Add Person" class="btn btn-primary" type="submit">
+            </div>
+          </div>
+        </div>
       </div>
-
+    
       <div>
         <li v-for="error in errors">{{ error }}</li>
       </div>
 
-      <div v-for="person in people">
-        <h2 v-on:click="toggleBioVisible(person)">{{ person.name }}</h2> 
-        <h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
-        <button class="btn btn-primary" v-on:click="deletePerson(person)">Delete</button>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box">
+          <h2>Interesting People</h2>
+        </div>
+        <div v-for="person in people" class="col-md-4 text-center item-block">
+          <h3 v-on:click="toggleBioVisible(person)">{{ person.name }}</h3>
+          <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
+          <p><a v-on:click="deletePerson(person)" class="btn btn-primary btn-outline with-arrow">Delete <i class="icon-arrow-right"></i></a></p>
+        </div>
       </div>
+
     </div>
 
   </div>
