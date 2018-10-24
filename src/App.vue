@@ -10,11 +10,11 @@
               <li class="active"><router-link to="/">Home</router-link></li>
               <li><router-link to="/about">About</router-link></li>
               <li><router-link to="/about">Fake Link</router-link></li>
-              <li>
+<!--               <li>
                 <div class="form-group">
                   <input v-model="nameFilter" class="form-control" placeholder="Search people" type="text">
                 </div>
-              </li>
+              </li> -->
             </ul>
           </nav>
         </div>
