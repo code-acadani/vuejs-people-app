@@ -52,7 +52,7 @@
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box">
           <h2>Interesting People</h2>
         </div>
-        <div v-for="person in orderBy(filterBy(people, nameFilter, 'name'), sortAttribute)" class="col-md-4 text-center item-block">
+        <div v-for="person in orderBy(filterBy(people, nameFilter, 'name'), sortAttribute, sortAscending)" class="col-md-4 text-center item-block">
           <h3 v-on:click="toggleBioVisible(person)">{{ person.name }}</h3>
           <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
           <p><a v-on:click="deletePerson(person)" class="btn btn-primary btn-outline with-arrow">Delete <i class="icon-arrow-right"></i></a></p>
@@ -79,7 +79,8 @@ export default {
       newPerson: {name: "", bio: ""},
       errors: [],
       nameFilter: "",
-      sortAttribute: "name"
+      sortAttribute: "name",
+      sortAscending: 1
     };
   },
   created: function() {
@@ -114,6 +115,11 @@ export default {
       person.bioVisible = !person.bioVisible;
     },
     setSortAttribute: function(attribute) {
+      if(this.sortAttribute === attribute) {
+        this.sortAscending = this.sortAscending * -1;
+      } else {
+        this.sortAscending = 1;
+      }
       this.sortAttribute = attribute;
     }
   },
