@@ -39,8 +39,15 @@
         </div>
 
         <div>
-          <button v-on:click="setSortAttribute('name')" class="btn btn-primary">Sort by name</button>
-          <button v-on:click="setSortAttribute('bio')" class="btn btn-primary">Sort by bio</button>
+          <button v-on:click="setSortAttribute('name')" class="btn btn-primary">Sort by name 
+            <span v-if="sortAttribute === 'name' && sortAscending === 1"><i class="icon-arrow-up"></i></span>
+            <span v-else-if="sortAttribute === 'name' && sortAscending === -1"><i class="icon-arrow-down"></i></span>
+          </button>
+          
+          <button v-on:click="setSortAttribute('bio')" class="btn btn-primary">Sort by bio 
+            <span v-if="sortAttribute === 'bio' && sortAscending === 1"><i class="icon-arrow-up"></i></span>
+            <span v-else-if="sortAttribute === 'bio' && sortAscending === -1"><i class="icon-arrow-down"></i></span>
+          </button>
         </div>
       </div>
 
