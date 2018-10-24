@@ -10,6 +10,11 @@
               <li class="active"><router-link to="/">Home</router-link></li>
               <li><router-link to="/about">About</router-link></li>
               <li><router-link to="/about">Fake Link</router-link></li>
+              <li>
+                <div class="form-group">
+                  <input v-model="nameFilter" class="form-control" placeholder="Search people" type="text">
+                </div>
+              </li>
             </ul>
           </nav>
         </div>
@@ -49,5 +54,12 @@
   </div>
 </template>
 
-<style>
-</style>
+<script>
+export default {
+  data: function() {
+    return {
+      nameFilter: ""
+    };
+  }
+};
+</script>
