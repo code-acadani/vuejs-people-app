@@ -43,7 +43,7 @@
             <span v-if="sortAttribute === 'name' && sortAscending === 1"><i class="icon-arrow-up"></i></span>
             <span v-else-if="sortAttribute === 'name' && sortAscending === -1"><i class="icon-arrow-down"></i></span>
           </button>
-          
+
           <button v-on:click="setSortAttribute('bio')" class="btn btn-primary">Sort by bio 
             <span v-if="sortAttribute === 'bio' && sortAscending === 1"><i class="icon-arrow-up"></i></span>
             <span v-else-if="sortAttribute === 'bio' && sortAscending === -1"><i class="icon-arrow-down"></i></span>
@@ -59,11 +59,15 @@
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box">
           <h2>Interesting People</h2>
         </div>
-        <div v-for="person in orderBy(filterBy(people, nameFilter, 'name'), sortAttribute, sortAscending)" class="col-md-4 text-center item-block">
-          <h3 v-on:click="toggleBioVisible(person)">{{ person.name }}</h3>
-          <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
-          <p><a v-on:click="deletePerson(person)" class="btn btn-primary btn-outline with-arrow">Delete <i class="icon-arrow-right"></i></a></p>
-        </div>
+
+        <transition-group name="slide-right">
+          <div v-for="person in orderBy(filterBy(people, nameFilter, 'name'), sortAttribute, sortAscending)" class="col-md-4 text-center item-block" v-bind:key="person.id">
+            <h3 v-on:click="toggleBioVisible(person)">{{ person.name }}</h3>
+            <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
+            <p><a v-on:click="deletePerson(person)" class="btn btn-primary btn-outline with-arrow">Delete <i class="icon-arrow-right"></i></a></p>
+          </div>
+        </transition-group>
+
       </div>
 
     </div>
@@ -74,6 +78,37 @@
 <style>
   .strike {
     text-decoration: line-through;
+  }
+  /* Vue.js fade */
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 3s
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0
+  }
+
+  /* Vue.js slide-right */
+  .slide-right-enter-active {
+    transition: all 3s ease;
+  }
+  .slide-right-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-right-enter, .slide-right-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+
+  /* Vue.js slide-left */
+  .slide-left-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-left-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-left-enter, .slide-left-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
   }
 </style>
 
