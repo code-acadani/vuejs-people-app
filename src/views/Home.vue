@@ -12,6 +12,13 @@
                 <input v-model="newPerson.name" class="form-control" placeholder="Name" type="text">
               </div>
             </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <input class="form-control" type="file" v-on:change="setFile($event)" ref="fileInput">
+              </div>
+            </div>
+
             <div class="col-md-12">
               <div class="form-group">
                 <textarea v-model="newPerson.bio" name="" class="form-control" id="" cols="30" rows="7" placeholder="Bio"></textarea>
@@ -64,6 +71,7 @@
           <div v-for="person in orderBy(filterBy(people, nameFilter, 'name'), sortAttribute, sortAscending)" class="col-md-4 text-center item-block" v-bind:key="person.id">
             <h3 v-on:click="toggleBioVisible(person)">{{ person.name }}</h3>
             <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
+            <img :src="person.avatar_url" alt="">
             <p><a v-on:click="deletePerson(person)" class="btn btn-primary btn-outline with-arrow">Delete <i class="icon-arrow-right"></i></a></p>
           </div>
         </transition-group>
@@ -122,7 +130,8 @@ export default {
       errors: [],
       nameFilter: "",
       sortAttribute: "name",
-      sortAscending: 1
+      sortAscending: 1,
+      avatar: ""
     };
   },
   created: function() {
@@ -132,15 +141,22 @@ export default {
     });
   },
   methods: {
-    addPerson: function() {
-      var params = {
-        name: this.newPerson.name, 
-        bio: this.newPerson.bio
+    setFile: function(event) {
+      if (event.target.files.length > 0) {
+        this.avatar = event.target.files[0];
       }
-      axios.post("http://localhost:3000/api/people", params).then(response => {
+    },
+    addPerson: function() {
+      var formData = new FormData();
+      formData.append("name", this.newPerson.name);
+      formData.append("bio", this.newPerson.bio);
+      formData.append("avatar", this.avatar);
+
+      axios.post("http://localhost:3000/api/people", formData).then(response => {
         this.people.push(response.data);
         this.newPerson.name = "";
         this.newPerson.bio = "";
+        this.$refs.fileInput.value = "";
       }).catch(error => {
         this.errors = error.response.data.errors;
       });
